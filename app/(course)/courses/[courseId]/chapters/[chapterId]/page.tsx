@@ -11,7 +11,8 @@ import { VideoPlayer } from "./_components/video-player";
 import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { CourseProgressButton } from "./_components/course-progress-button";
 
-const ChapterIdPage = async ({
+// Defining asynchronous function to render chapter page
+const ChapterIdPage = async ({ 
   params
 }: {
   params: { courseId: string; chapterId: string }
@@ -40,12 +41,14 @@ const ChapterIdPage = async ({
     return redirect("/")
   }
 
-
+  // Checking if chapter is locked based on purchase status.
   const isLocked = !chapter.isFree && !purchase;
+  // Checking if chapter should be marked as complete upon completion.
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
   return ( 
     <div>
+      {/* Displaying banner if chapter is already completed. */}
       {userProgress?.isCompleted && (
         <Banner
           variant="success"
@@ -60,6 +63,7 @@ const ChapterIdPage = async ({
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4">
+        {/* Rendering video player component. */}
           <VideoPlayer
             chapterId={params.chapterId}
             title={chapter.title}
@@ -75,6 +79,7 @@ const ChapterIdPage = async ({
             <h2 className="text-2xl font-semibold mb-2">
               {chapter.title}
             </h2>
+            {/* Rendering progress button if course is purchased. */}
             {purchase ? (
               <CourseProgressButton
                 chapterId={params.chapterId}
@@ -115,8 +120,9 @@ const ChapterIdPage = async ({
           )}
         </div>
       </div>
+      <div></div>
     </div>
    );
 }
  
-export default ChapterIdPage;
+export default ChapterIdPage; // Exporting ChapterIdPage component.

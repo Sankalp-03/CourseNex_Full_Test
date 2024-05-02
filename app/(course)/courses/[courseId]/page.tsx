@@ -6,14 +6,15 @@ const CourseIdPage = async ({
 }: {
   params: { courseId: string; }
 }) => {
+  // Fetching course data from database based on courseId
   const course = await db.course.findUnique({
     where: {
-      id: params.courseId,
+      id: params.courseId, // Filtering course data based on courseId
     },
     include: {
-      chapters: {
+      chapters: { // Including chapters associated with the course.
         where: {
-          isPublished: true,
+          isPublished: true, // Filtering published chapters.
         },
         orderBy: {
           position: "asc"
@@ -22,7 +23,7 @@ const CourseIdPage = async ({
     }
   });
 
-  if (!course) {
+  if (!course) { // Redirecting to home page if course data is not available.
     return redirect("/");
   }
 
